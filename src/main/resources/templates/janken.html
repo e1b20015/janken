@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>SpringBoot Sample2-4</title>
+  <title>Janken Game</title>
 </head>
 
 <body>
@@ -11,8 +11,20 @@
   <!--th:ifと書くと条件文を表す．この例の場合，kakeruResultが
       返ってきたとき(nullでないとき)だけdivを表示する
     th:ifのように対象がthymeleafの変数であることを示している場合は"["で囲まなくて良い-->
-  <div th:if="${kakeruResult}">
-    Hi：[[${kakeruResult}]]
+  <div th:if="${username}">
+    Hi：[[${username}]]
+  </div>
+
+  <a href="/rock/Gu">ぐー</a>
+  <a href="/scissor/Choki">ちょき</a>
+  <a href="/paper/Pa">ぱー</a>
+
+  <div th:if="${hand}">
+    <p>
+      あなたの手 [[${hand}]] <br>
+      相手の手 Gu <br>
+
+    </p>
   </div>
 </body>
 
