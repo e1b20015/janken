@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
 
 <head>
   <meta charset="utf-8">
@@ -7,27 +7,29 @@
 </head>
 
 <body>
+  <div><a href="/logout">ログアウト</a></div>
+
   <h1>Janken GAME!</h1>
 
-  <p>エントリー</p>
+  <div th:if="${entry}">
+    エントリー
+    <ul>
+      <li th:each="user : ${entry.users}">[[${user}]]</li>
+    </ul>
+  </div>
 
-  <!--th:ifと書くと条件文を表す．この例の場合，kakeruResultが
-      返ってきたとき(nullでないとき)だけdivを表示する
-    th:ifのように対象がthymeleafの変数であることを示している場合は"["で囲まなくて良い-->
   <div th:if="${username}">
     Hi：[[${username}]]
   </div>
 
-  <a href="/rock/Gu">ぐー</a>
-  <a href="/scissor/Choki">ちょき</a>
-  <a href="/paper/Pa">ぱー</a>
+  <a href="/janken1/1">ぐー</a>
+  <a href="/janken1/2">ちょき</a>
+  <a href="/janken1/3">ぱー</a>
 
   <div th:if="${hand}">
-    <p>
-      あなたの手 [[${hand}]] <br>
-      相手の手 Gu <br>
-
-    </p>
+    <p>あなたの手 [[${hand}]]</p>
+    <p>相手の手 Gu </p>
+    <p>結果 [[${result}]]</p>
   </div>
 </body>
 
