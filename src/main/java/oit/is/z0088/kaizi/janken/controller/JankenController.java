@@ -15,6 +15,8 @@ import oit.is.z0088.kaizi.janken.model.User;
 import oit.is.z0088.kaizi.janken.model.UserMapper;
 import oit.is.z0088.kaizi.janken.model.Match;
 import oit.is.z0088.kaizi.janken.model.MatchMapper;
+import oit.is.z0088.kaizi.janken.model.MatchInfo;
+import oit.is.z0088.kaizi.janken.model.MatchInfoMapper;
 
 /**
  * Sample21Controller
@@ -32,6 +34,9 @@ public class JankenController {
 
   @Autowired
   MatchMapper matchMapper;
+
+  @Autowired
+  MatchInfoMapper matchinfoMapper;
 
   @GetMapping("/janken/{param1}")
   public String janken(@PathVariable String param1, ModelMap model) {
@@ -118,6 +123,37 @@ public class JankenController {
     model.addAttribute("matches", matches);
 
     return "match.html";
+
+  }
+
+  @GetMapping("/wait")
+  public String waitJanken(@RequestParam Integer param1, @RequestParam Integer id, ModelMap model, Principal prin) {
+    // グー：１，チョキ：２，パー：３
+    String te = null;
+    if (param1 == 1) {
+      te = "Gu";
+    } else if (param1 == 2) {
+      te = "Choki";
+    } else if (param1 == 3) {
+      te = "Pa";
+    }
+
+    User jibun = userMapper.selectByName(prin.getName());
+    MatchInfo info = new MatchInfo();
+    info.setUser1(jibun.getId());
+    info.setUser2(id);// CPU
+    info.setUser1Hand(te);
+    info.setIsActive(true);
+    // match.setUser2Hand("Gu");// matchinfoにはいらない
+
+    // autowiredの存在を忘れていた．
+    matchinfoMapper.insertMatchInfo(info);
+
+    ArrayList<Match> matchinfo = matchinfoMapper.selectAllByMatchInfo();
+    model.addAttribute("matchinfo", matchinfo);
+    model.addAttribute("username", prin.getName());
+
+    return "wait.html";
 
   }
 

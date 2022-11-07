@@ -13,17 +13,17 @@
 
   <div th:each="aite,stat:${aite}" th:if="${username}">
     <h2>[[${username}]] V.S. [[${aite.name}]]</h2>
-  </div>
 
   <p>
-  <div>
-    <a href="/fight/?param1=1">ぐー</a>
+    <a th:href="@{/wait/?param1=1&(id=${aite.id})}">ぐー</a>
 
-    <a href="/fight/?param1=2">ちょき</a>
+    <a th:href="@{/wait/?param1=2&(id=${aite.id})}">ちょき</a>
 
-    <a href="/fight/?param1=3">ぱー</a>
-  </div>
+    <a th:href="@{/wait/?param1=3&(id=${aite.id})}">ぱー</a>
   </p>
+</div>
+
+
   <div th:if="${hand}">
     <p>
       あなたの手 [[${hand}]]
