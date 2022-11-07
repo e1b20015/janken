@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import oit.is.z0088.kaizi.janken.model.Entry;
 import oit.is.z0088.kaizi.janken.model.User;
 import oit.is.z0088.kaizi.janken.model.UserMapper;
+import oit.is.z0088.kaizi.janken.model.Match;
+import oit.is.z0088.kaizi.janken.model.MatchMapper;
 
 /**
  * Sample21Controller
@@ -27,6 +29,9 @@ public class JankenController {
 
   @Autowired
   UserMapper userMapper;
+
+  @Autowired
+  MatchMapper matchMapper;
 
   /*
    * @GetMapping("/janken")
@@ -44,8 +49,8 @@ public class JankenController {
    * }
    */
 
-  @GetMapping("/janken1/{param1}")
-  public String rock(@PathVariable String param1, ModelMap model) {
+  @GetMapping("/janken/{param1}")
+  public String janken(@PathVariable String param1, ModelMap model) {
     int i = Integer.parseInt(param1);
     String hand = null, result = null;
 
@@ -62,6 +67,8 @@ public class JankenController {
     model.addAttribute("hand", hand);
     model.addAttribute("result", result);
 
+    ArrayList<Match> matches = matchMapper.selectAllByMatches();
+    model.addAttribute("matches", matches);
     return "janken.html";
   }
 
@@ -71,13 +78,15 @@ public class JankenController {
     this.entry.addUser(loginUser);
     model.addAttribute("entry", this.entry);
 
+    ArrayList<User> users = userMapper.selectAllUsers();
+    model.addAttribute("users", users);
+
     return "janken.html";
   }
 
   @PostMapping("/janken")
-  public String sample45(ModelMap model) {
-    ArrayList<User> user = userMapper.selectAllUser();
-    model.addAttribute("user", user);
+  public String jankenpost(@RequestParam String username, ModelMap model) {
+    model.addAttribute("username", username);
     return "janken.html";
   }
 

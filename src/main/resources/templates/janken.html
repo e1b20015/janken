@@ -11,26 +11,57 @@
 
   <h1>Janken GAME!</h1>
 
-  <div th:each="user,stat:${user}">
-    <h2>エントリー</h2>
+  <div th:if="${entry}">
+    エントリー
     <ul>
-      <li>[[${user.userName}]]</li>
+      <li th:each="user : ${entry.users}">[[${user}]]</li>
     </ul>
   </div>
 
-  <div th:if="${username}">
-    Hi：[[${username}]]
+  <p th:if="${users}"></p>
+
+  <div th:each="users,stat:${users}">
+    <tr>
+      <td>Index:[[${stat.index}]]</td>
+      <td>ID:[[${users.id}]]</td>
+      <td>ユーザ名:[[${users.name}]]</td>
+    </tr>
   </div>
+  </p>
 
-  <a href="/janken1/1">ぐー</a>
-  <a href="/janken1/2">ちょき</a>
-  <a href="/janken1/3">ぱー</a>
-
+  <p>
+  <div>
+    <a href="/janken/1">ぐー</a>
+    <a href="/janken/2">ちょき</a>
+    <a href="/janken/3">ぱー</a>
+  </div>
+  </p>
   <div th:if="${hand}">
-    <p>あなたの手 [[${hand}]]</p>
-    <p>相手の手 Gu </p>
-    <p>結果 [[${result}]]</p>
+    <p>
+      あなたの手 [[${hand}]]
+    </p>
+    <p>
+      相手の手 Gu
+    </p>
+    <p>
+      結果 [[${result}]]
+    </p>
+    <p th:if="${matches}"></p>
+
+    <div th:each="matches,stat:${matches}">
+      <tr>
+        <td>Index:[[${stat.index}]]</td>
+        <td>ID:[[${matches.id}]]</td>
+        <td>ユーザ1:[[${matches.user1}]]</td>
+        <td>ユーザ2:[[${matches.user2}]]</td>
+        <td>ユーザ1の手:[[${matches.user1Hand}]]</td>
+        <td>ユーザ2の手:[[${matches.user2Hand}]]</td>
+      </tr>
+    </div>
+    </p>
   </div>
+
+
 </body>
 
 </html>
