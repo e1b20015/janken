@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+
+</head>
+
+<body>
+  <h2>相手の手を待ってます</h2>
+
+
+  <p>
+  <div th:if="${username}">
+    Hi [[${username}]]
+  </div>
+  </p>
+</body>
+
+</html>
