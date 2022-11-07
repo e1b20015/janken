@@ -77,6 +77,7 @@ public class JankenController {
     String loginUser = prin.getName();
     this.entry.addUser(loginUser);
     model.addAttribute("entry", this.entry);
+    model.addAttribute("username", loginUser);
 
     ArrayList<User> users = userMapper.selectAllUsers();
     model.addAttribute("users", users);
@@ -88,6 +89,17 @@ public class JankenController {
   public String jankenpost(@RequestParam String username, ModelMap model) {
     model.addAttribute("username", username);
     return "janken.html";
+  }
+
+  @GetMapping("/match")
+  public String matchJanken(@RequestParam Integer id, ModelMap model, Principal prin) {
+    String loginUser = prin.getName();
+    User aite = userMapper.selectById(id);
+
+    model.addAttribute("aite", aite);
+    model.addAttribute("username", loginUser);
+
+    return "match.html";
   }
 
 }
