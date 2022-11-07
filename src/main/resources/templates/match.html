@@ -14,4 +14,27 @@
   <div th:each="aite,stat:${aite}" th:if="${username}">
     <h2>[[${username}]] V.S. [[${aite.name}]]</h2>
   </div>
+
+  <p>
+  <div>
+    <a href="/fight/?param1=1">ぐー</a>
+
+    <a href="/fight/?param1=2">ちょき</a>
+
+    <a href="/fight/?param1=3">ぱー</a>
+  </div>
+  </p>
+  <div th:if="${hand}">
+    <p>
+      あなたの手 [[${hand}]]
+    </p>
+    <p>
+      相手の手 Gu
+    </p>
+    <p>
+      結果 [[${result}]]
+    </p>
+  </div>
+
+  <a href="/janken">もどる</a>
 </body>

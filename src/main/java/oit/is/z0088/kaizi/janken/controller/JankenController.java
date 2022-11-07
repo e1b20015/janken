@@ -33,22 +33,6 @@ public class JankenController {
   @Autowired
   MatchMapper matchMapper;
 
-  /*
-   * @GetMapping("/janken")
-   * public String sample21() {
-   * return "janken.html";
-   * }
-   */
-
-  /*
-   * @PostMapping("/janken")
-   * public String jankenpost(@RequestParam String name, ModelMap model) {
-   * String username = name;
-   * model.addAttribute("username", username);
-   * return "janken.html";
-   * }
-   */
-
   @GetMapping("/janken/{param1}")
   public String janken(@PathVariable String param1, ModelMap model) {
     int i = Integer.parseInt(param1);
@@ -67,7 +51,7 @@ public class JankenController {
     model.addAttribute("hand", hand);
     model.addAttribute("result", result);
 
-    ArrayList<Match> matches = matchMapper.selectAllByMatches();
+    ArrayList<Match> matches = matchMapper.selectAllMatches();
     model.addAttribute("matches", matches);
     return "janken.html";
   }
@@ -81,6 +65,8 @@ public class JankenController {
 
     ArrayList<User> users = userMapper.selectAllUsers();
     model.addAttribute("users", users);
+    ArrayList<Match> matches = matchMapper.selectAllMatches();
+    model.addAttribute("matches", matches);
 
     return "janken.html";
   }
@@ -92,7 +78,7 @@ public class JankenController {
   }
 
   @GetMapping("/match")
-  public String matchJanken(@RequestParam Integer id, ModelMap model, Principal prin) {
+  public String match(@RequestParam Integer id, ModelMap model, Principal prin) {
     String loginUser = prin.getName();
     User aite = userMapper.selectById(id);
 
@@ -100,6 +86,39 @@ public class JankenController {
     model.addAttribute("username", loginUser);
 
     return "match.html";
+  }
+
+  @GetMapping("/fight")
+  public String matchJanken(@RequestParam Integer param1, ModelMap model, Principal prin) {
+    // グー：１，チョキ：２，パー：３
+    String hand = null, result = null;
+    if (param1 == 1) {
+      hand = "Gu";
+      result = "draw...";
+    } else if (param1 == 2) {
+      hand = "Choki";
+      result = "You Lose...";
+    } else if (param1 == 3) {
+      hand = "Pa";
+      result = "You Win!";
+    }
+    // 使いまわしのプログラムから抜き出してinsertしたい
+    // ここで値を登録するとthymeleafが受け取り，htmlで処理することができるようになる
+    model.addAttribute("hand", hand);
+    model.addAttribute("result", result);
+    User jibun = userMapper.selectByName(prin.getName());
+    Match match = new Match();
+    match.setUser1(jibun.getId());
+    match.setUser2(1);// CPU
+    match.setUser1Hand(hand);
+    match.setUser2Hand("Gu");// CPUの手
+    matchMapper.insertMatches(match);
+
+    ArrayList<Match> matches = matchMapper.selectAllMatches();
+    model.addAttribute("matches", matches);
+
+    return "match.html";
+
   }
 
 }

@@ -17,7 +17,7 @@
   </div>
   </p>
 
-  <p th:if="${users}"></p>
+  <p th:if="${users}">
   <h2>エントリー</h2>
 
   <div th:each="users,stat:${users}">
@@ -27,7 +27,7 @@
   </div>
   </p>
 
-  <p th:if="${matches}"></p>
+  <p th:if="${matches}">
   <h2>試合結果</h2>
   <div th:each="matches,stat:${matches}">
     <tr>
