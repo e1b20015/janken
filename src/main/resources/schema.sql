@@ -1,6 +1,6 @@
 CREATE TABLE users (
     id IDENTITY PRIMARY KEY,
-    userName VARCHAR NOT NULL
+    name VARCHAR NOT NULL
 );
 CREATE TABLE matches (
     id IDENTITY PRIMARY KEY,
