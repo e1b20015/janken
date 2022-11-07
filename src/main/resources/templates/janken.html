@@ -31,7 +31,6 @@
   <h2>試合結果</h2>
   <div th:each="matches,stat:${matches}">
     <tr>
-      <td>Index:[[${stat.index}]]</td>
       <td>ID:[[${matches.id}]]</td>
       <td>ユーザ1:[[${matches.user1}]]</td>
       <td>ユーザ2:[[${matches.user2}]]</td>
