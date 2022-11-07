@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface UserMapper {
+public interface MatchMapper {
 
   @Select("SELECT id,name, from users where id = #{id}")
   User selectById(int id);
@@ -20,14 +20,14 @@ public interface UserMapper {
    * = true -> Keyは自動生成されることを表す keyColumn : keyになるテーブルのカラム名 keyProperty :
    * keyになるJavaクラスのフィールド名
    *
-   * @param users
+   * @param matches
    */
   @Insert("INSERT INTO users (name) VALUES #{name};")
   @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
   void insertUser(User user);
 
-  @Select("SELECT * from users")
-  ArrayList<User> selectAllUsers();
+  @Select("SELECT * from matches")
+  ArrayList<Match> selectAllByMatches();
 
   /**
    * DBのカラム名とjavaクラスのフィールド名が同じ場合はそのまま代入してくれる（大文字小文字の違いは無視される）
